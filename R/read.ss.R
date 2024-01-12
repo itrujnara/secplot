@@ -1,5 +1,5 @@
 read.ss <- function(path, header = TRUE, id = NULL) {
-  data <- read.delim(path, header = header)
+  data <- utils::read.delim(path, header = header)
   stopifnot(ncol(data) == 4)
   colnames(data) <- c("Type", "Length", "Start", "End")
   def_id <- tools::file_path_sans_ext(basename(path))

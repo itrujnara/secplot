@@ -1,13 +1,13 @@
 ss.summary <- function(ss) {
-  feat_counts <- data$features %>% group_by(Type) %>% summarize(count = n())
+  feat_counts <- ss$features %>% group_by(Type) %>% summarize(count = n())
   feat_count_report <- feat_counts %>%
     apply(1, function(x) paste0("\t", x[1], ": ", x[2], "\n"))
 
-  feat_coverage <- data$features %>% group_by(Type) %>% summarize(coverage = sum(Length))
+  feat_coverage <- ss$features %>% group_by(Type) %>% summarize(coverage = sum(Length))
   feat_coverage_report <- feat_coverage %>%
     apply(1, function(x) paste0("\t", x[1], ": ", x[2], "\n"))
 
-  feat_lengths <- data$features %>% group_by(Type) %>%
+  feat_lengths <- ss$features %>% group_by(Type) %>%
     summarize(min = min(Length), mean = mean(Length),
               median = median(Length), max = max(Length))
   feat_length_report <- feat_lengths %>%
