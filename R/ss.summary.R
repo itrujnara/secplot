@@ -1,15 +1,28 @@
+#' Pretty-print information about a secondary structure
+#'
+#' @importFrom rlang .data
+#'
+#' @param ss A secondary_structure object.
+#'
+#' @return Nothing.
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' ss.summary(my_structure)
+#' }
 ss.summary <- function(ss) {
-  feat_counts <- ss$features %>% group_by(Type) %>% summarize(count = n())
+  feat_counts <- ss$features %>% dplyr::group_by(.data$Type) %>% dplyr::summarize(count = dplyr::n())
   feat_count_report <- feat_counts %>%
     apply(1, function(x) paste0("\t", x[1], ": ", x[2], "\n"))
 
-  feat_coverage <- ss$features %>% group_by(Type) %>% summarize(coverage = sum(Length))
+  feat_coverage <- ss$features %>% dplyr::group_by(.data$Type) %>% dplyr::summarize(coverage = sum(.data$Length))
   feat_coverage_report <- feat_coverage %>%
     apply(1, function(x) paste0("\t", x[1], ": ", x[2], "\n"))
 
-  feat_lengths <- ss$features %>% group_by(Type) %>%
-    summarize(min = min(Length), mean = mean(Length),
-              median = median(Length), max = max(Length))
+  feat_lengths <- ss$features %>% dplyr::group_by(.data$Type) %>%
+    dplyr::summarize(min = min(.data$Length), mean = mean(.data$Length),
+              median = stats::median(.data$Length), max = max(.data$Length))
   feat_length_report <- feat_lengths %>%
     apply(1, function(x) paste0(x[1], "\t", x[2], "\t", x[3], "\t", x[4], "\t", x[5], "\n"))
 
